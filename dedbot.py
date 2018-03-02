@@ -19,7 +19,7 @@ async def do_spam(channel):
         text = next(g)
         if (spam[channel]):
             await client.send_message(channel, text)
-            await asyncio.sleep(1)
+            await asyncio.sleep(1.3)
         else:
             return
 
@@ -59,6 +59,10 @@ async def on_message(message):
                 if 'image' in embed.keys():
                     pokemon = re.search('[0-9]{3}(.*?)\.png', embed['image']['url']).group(1)
                     await client.send_message(message.channel, 'p!catch ' + pokemon)
+                    print("Trying to catch " + pokemon)
+            if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].find("Congrat" + str(client.user.id)):
+                    pokemon = re.search('[0-9]{3}(.*?)\.png', embed['image']['url']).group(1)
+                    print("You caught " + pokemon)
     if message.author == client.user:
         if message.content.startswith('!spam'):
                 if message.channel in spam.keys():
