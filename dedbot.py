@@ -6,7 +6,7 @@ import re
 import getpass
 import argparse
 
-SPAM_TEXT = '''Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'''
+SPAM_TEXT = '''The big brown dog jumped over the small cat'''
 
 client = discord.Client()
 spam = {}
@@ -19,7 +19,7 @@ async def do_spam(channel):
         text = next(g)
         if (spam[channel]):
             await client.send_message(channel, text)
-            await asyncio.sleep(1.3)
+            await asyncio.sleep(1.5)
         else:
             return
 
@@ -49,6 +49,7 @@ async def on_ready():
     print(client.user.name)
     print(client.user.id)
     print('------')
+    autocatch = False
 
 @client.event
 async def on_message(message):
@@ -56,7 +57,7 @@ async def on_message(message):
         if message.embeds != []:
             if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].startswith("A wild po"):
                 embed = message.embeds[0]
-                if 'image' in embed.keys():
+                if 'image' in embed.keys() and autocatch == True:
                     pokemon = re.search('[0-9]{3}(.*?)\.png', embed['image']['url']).group(1)
                     await client.send_message(message.channel, 'p!catch ' + pokemon)
                     print("Trying to catch " + pokemon)
@@ -64,6 +65,9 @@ async def on_message(message):
                     pokemon = re.search('[0-9]{3}(.*?)\.png', embed['image']['url']).group(1)
                     print("You caught " + pokemon)
     if message.author == client.user:
+        if message.content.startswith('!catch'):
+                autocatch = True
+                print(catch 
         if message.content.startswith('!spam'):
                 if message.channel in spam.keys():
                     spam[message.channel] = not spam[message.channel]
