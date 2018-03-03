@@ -11,6 +11,7 @@ client = discord.Client()
 spam = {}
 spam_from_file = False
 spam_file = None
+auto_catch = False
 
 async def do_spam(channel):
     g = next_spam_line()
@@ -51,11 +52,12 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
+    global auto_catch
     if message.author.id == '365975655608745985':
         if message.embeds != []:
             if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].startswith("A wild po"):
                 embed = message.embeds[0]
-                if 'image' in embed.keys():
+                if 'image' in embed.keys() and auto_catch:
                     pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
                     await client.send_message(message.channel, 'p!catch ' + pokemon)
                     print("Trying to catch " + pokemon)
@@ -69,6 +71,8 @@ async def on_message(message):
                 else:
                     spam[message.channel] = True
                 await do_spam(message.channel);
+        elif message.content.startswith('!catch'):
+            auto_catch = not auto_catch
 
 #@client.event
 #async def on_message_delete(message):
