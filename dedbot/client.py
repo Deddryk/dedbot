@@ -78,16 +78,16 @@ async def on_message(message):
 #async def on_message_delete(message):
 #    await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
 
-def main():
+def main(_spam_file=None):
+    global spam_from_file
+    global spam_file
+    if _spam_file == None:
+        spam_from_file = False
+    else:
+        spam_from_file = True
+        spam_file = _spam_file
     user_email = input("email: ")
     user_pw = getpass.getpass()
     client.run(user_email, user_pw)
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--file", type=open, help="Text file to read spam from")
-    args = parser.parse_args()
-    if args.file:
-        spam_file = args.file
-        spam_from_file = True
-    main()
+
