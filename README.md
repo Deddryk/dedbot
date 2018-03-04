@@ -21,3 +21,6 @@ Features
     `-f <filename>` it reads lines from that text file and loops over it.
 
     Toggle with `!spam`
+
+[pokecord]: https://discordbots.org/bot/365975655608745985
+
