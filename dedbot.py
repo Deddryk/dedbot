@@ -73,14 +73,14 @@ async def on_message(message):
                 await do_spam(message.channel);
         elif message.content.startswith('!catch'):
             auto_catch = not auto_catch
-         if message.content.find('deleted message:'):
+        elif re.search('deleted message', message.content):
              await client.add_reaction(message, '\U0001F61E')
 
 
 
-#@client.event
-#async def on_message_delete(message):
-#    await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+@client.event
+async def on_message_delete(message):
+    await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
 
 def main():
     user_email = input("email: ")
