@@ -73,6 +73,10 @@ async def on_message(message):
                 await do_spam(message.channel);
         elif message.content.startswith('!catch'):
             auto_catch = not auto_catch
+         if message.content.find('deleted message:'):
+             await client.add_reaction(message, '\U0001F61E')
+
+
 
 #@client.event
 #async def on_message_delete(message):
