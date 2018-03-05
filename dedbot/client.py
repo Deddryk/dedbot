@@ -50,6 +50,9 @@ async def on_ready():
     print(client.user.id)
     print('------')
 
+def get_server_members(server):
+    return [member.mention for member in server.members]
+
 @client.event
 async def on_message(message):
     global auto_catch
@@ -73,6 +76,11 @@ async def on_message(message):
                 await do_spam(message.channel);
         elif message.content.startswith('!catch'):
             auto_catch = not auto_catch
+        elif message.content.startswith('!everyone'):
+            m = ""
+            for i in get_server_members(message.server):
+                m += i
+            await client.send_message(message.channel, m) 
 
 #@client.event
 #async def on_message_delete(message):
