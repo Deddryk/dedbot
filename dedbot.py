@@ -1,55 +1,12 @@
-#Author: Deddryk
+#!/usr/bin/python3
+
+import sys
+import argparse
+import logging
 
 import discord
-import asyncio
-import re
-import getpass
-import argparse
 
-SPAM_TEXT = '''The big brown dog jumped over the small cat'''
-client = discord.Client()
-spam = {}
-spam_from_file = False
-spam_file = None
-auto_catch = False
-
-async def do_spam(channel):
-    g = next_spam_line()
-    while(True):
-        text = next(g)
-        if (spam[channel]):
-            await client.send_message(channel, text)
-            await asyncio.sleep(1.5)
-        else:
-            return
-
-def next_spam_line():
-    if spam_from_file:
-        g = next_spam_line_file()
-        while(True):
-            yield next(next_spam_line_file())
-    else:
-        while True:
-            yield SPAM_TEXT
-
-def next_spam_line_file():
-    global spam_file
-    while True:
-        while(spam_file):
-            text = spam_file.readline()
-            if text != "\n" and text != '':
-                yield text
-            if text == '':
-                spam_file.seek(0)
-
-
-@client.event
-async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
-
+<<<<<<< HEAD
 @client.event
 async def on_message(message):
     global auto_catch
@@ -81,17 +38,21 @@ async def on_message(message):
 @client.event
 async def on_message_delete(message):
     await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+=======
+from dedbot import client
 
-def main():
-    user_email = input("email: ")
-    user_pw = getpass.getpass()
-    client.run(user_email, user_pw)
+logger = logging.getLogger('discord')
+logger.setLevel(logging.INFO)
+handler = logging.FileHandler(filename='discord.log', encoding='utf-8', mode='w')
+handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(message)s'))
+logger.addHandler(handler)
+>>>>>>> develop
 
-if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-f", "--file", type=open, help="Text file to read spam from")
-    args = parser.parse_args()
-    if args.file:
-        spam_file = args.file
-        spam_from_file = True
-    main()
+parser = argparse.ArgumentParser()
+parser.add_argument("-f", "--file", type=open, help="Text file to read spam from")
+args = parser.parse_args()
+if args.file:
+    client.main(args.file)
+else:
+    client.main()
+

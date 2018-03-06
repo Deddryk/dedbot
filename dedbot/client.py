@@ -11,8 +11,12 @@ client = discord.Client()
 spam = {}
 spam_from_file = False
 spam_file = None
+<<<<<<< HEAD
 auto_catch = True
 reactions = True
+=======
+auto_catch = False
+>>>>>>> develop
 
 async def do_spam(channel):
     g = next_spam_line()
@@ -57,6 +61,7 @@ def get_server_members(server):
 @client.event
 async def on_message(message):
     global auto_catch
+<<<<<<< HEAD
     global reactions
     if message.author.id == '365975655608745985':
         if message.embeds != []:
@@ -65,13 +70,21 @@ async def on_message(message):
                     caught = True
                 else:
                     caught = False
+=======
+    if message.author.id == '365975655608745985':
+        if message.embeds != []:
+>>>>>>> develop
             if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].startswith("A wild po"):
                 embed = message.embeds[0]
                 if 'image' in embed.keys() and auto_catch:
                     pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
                     await client.send_message(message.channel, 'p!catch ' + pokemon)
                     print("Trying to catch " + pokemon)
+<<<<<<< HEAD
             if 'title' in message.embeds[0].keys() and caught:
+=======
+            if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].find("Congrat" + str(client.user.id)):
+>>>>>>> develop
                     pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
                     print("You caught " + pokemon)
     if message.author == client.user:
@@ -83,14 +96,18 @@ async def on_message(message):
                 await do_spam(message.channel);
         elif message.content.startswith('!catch'):
             auto_catch = not auto_catch
+<<<<<<< HEAD
         elif message.content.startswith('!react'):
              reactions = not reactions
+=======
+>>>>>>> develop
         elif message.content.startswith('!everyone'):
             m = ""
             for i in get_server_members(message.server):
                 m += i
             await client.send_message(message.channel, m) 
 
+<<<<<<< HEAD
 
 #To be omitted
         elif reactions and message.channel.id == '255851788870090754':
@@ -115,6 +132,11 @@ async def on_message_delete(message):
         await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
         #insert gotcha into the sent message via reactions
 
+=======
+#@client.event
+#async def on_message_delete(message):
+#    await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+>>>>>>> develop
 
 def main(_spam_file=None):
     global spam_from_file
@@ -124,6 +146,7 @@ def main(_spam_file=None):
     else:
         spam_from_file = True
         spam_file = _spam_file
+<<<<<<< HEAD
     user_email = input("Email: ")
     user_pw = getpass.getpass()
     client.run(user_email, user_pw)
@@ -135,3 +158,10 @@ def main(_spam_file=None):
 #            await client.add_reaction(message, "\U0001F1E8")
 #            await client.add_reaction(message, "\U0001F1ED")
 #            await client.add_reaction(message, "\U0001F1E6")
+=======
+    user_email = input("email: ")
+    user_pw = getpass.getpass()
+    client.run(user_email, user_pw)
+
+
+>>>>>>> develop
