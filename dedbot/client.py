@@ -6,42 +6,23 @@ import re
 import getpass
 import argparse
 
+from dedbot.spammer import Spammer
+
 SPAM_TEXT = '''The big brown dog jumped over the small cat'''
 client = discord.Client()
 spam = {}
 spam_from_file = False
 spam_file = None
 auto_catch = False
+spammer = None
 
 async def do_spam(channel):
-    g = next_spam_line()
     while(True):
-        text = next(g)
         if (spam[channel]):
-            await client.send_message(channel, text)
+            await client.send_message(channel, next(spammer))
             await asyncio.sleep(1.5)
         else:
             return
-
-def next_spam_line():
-    if spam_from_file:
-        g = next_spam_line_file()
-        while(True):
-            yield next(next_spam_line_file())
-    else:
-        while True:
-            yield SPAM_TEXT
-
-def next_spam_line_file():
-    global spam_file
-    while True:
-        while(spam_file):
-            text = spam_file.readline()
-            if text != "\n" and text != '':
-                yield text
-            if text == '':
-                spam_file.seek(0)
-
 
 @client.event
 async def on_ready():
@@ -89,11 +70,8 @@ async def on_message(message):
 def main(_spam_file=None):
     global spam_from_file
     global spam_file
-    if _spam_file == None:
-        spam_from_file = False
-    else:
-        spam_from_file = True
-        spam_file = _spam_file
+    global spammer
+    spammer = Spammer(_spam_file)
     user_email = input("email: ")
     user_pw = getpass.getpass()
     client.run(user_email, user_pw)

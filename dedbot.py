@@ -15,7 +15,7 @@ handler.setFormatter(logging.Formatter('%(asctime)s:%(levelname)s:%(name)s: %(me
 logger.addHandler(handler)
 
 parser = argparse.ArgumentParser()
-parser.add_argument("-f", "--file", type=open, help="Text file to read spam from")
+parser.add_argument("-f", "--file", help="Text file to read spam from")
 args = parser.parse_args()
 if args.file:
     client.main(args.file)
