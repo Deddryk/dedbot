@@ -41,13 +41,10 @@ async def on_message(message):
         if message.embeds != []:
             if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].startswith("A wild po"):
                 embed = message.embeds[0]
-                if 'image' in embed.keys() and auto_catch and server.id('418975946394173442'):
-                    pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
+                pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
+                if 'image' in embed.keys() and auto_catch and server.id == '418975946394173442':
                     await client.send_message(message.channel, 'p!catch ' + pokemon)
                     print("Trying to catch " + pokemon)
-            if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].find("Congrat" + str(client.user.id)):
-                    pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
-                    print("You caught " + pokemon)
     if message.author == client.user:
         if message.content.startswith('!spam'):
                 if message.channel in spam.keys():
