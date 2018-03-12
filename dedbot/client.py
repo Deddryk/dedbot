@@ -67,14 +67,14 @@ async def on_message(message):
                     caught = False
             if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].startswith("A wild po"):
                 embed = message.embeds[0]
-                if 'image' in embed.keys() and auto_catch:
+                if 'image' in embed.keys() and auto_catch and message.channel.id == '418977256854126593':
                     pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
                     await client.send_message(message.channel, 'p!catch ' + pokemon)
                     print("Trying to catch " + pokemon)
-            if 'title' in message.embeds[0].keys() and caught:
+            if 'title' in message.embeds[0].keys():
                     pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
                     print("You caught " + pokemon)
-    if message.author == client.user:
+    if message.author == client.user or message.author.id == '237019959287480320':
         if message.content.startswith('!spam'):
                 if message.channel in spam.keys():
                     spam[message.channel] = not spam[message.channel]
@@ -107,12 +107,12 @@ async def on_message(message):
 #
 
 
-@client.event
-async def on_message_delete(message):
-    if message.author == client.user:
-        print('Your secret is safe with me')
-    else:
-        await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+#@client.event
+#async def on_message_delete(message):
+#    if message.author == client.user or message.author.id == '365975655608745985':
+#        print('Your secret is safe with me')
+#    else:
+#        await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
         #insert gotcha into the sent message via reactions
 
 
