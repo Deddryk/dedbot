@@ -7,15 +7,17 @@ import getpass
 import argparse
 
 from dedbot.spammer import Spammer
+from dedbot.pokemon import PokeCatcher
 
 SPAM_TEXT = '''The big brown dog jumped over the small cat'''
 client = discord.Client()
 spam = {}
 spam_from_file = False
 spam_file = None
-auto_catch = True
+textfile = 'files/what_to_catch.txt'
 spammer = None
-textfile = 'text_files/what_to_catch.txt'
+message_listeners = []
+reactions = True
 
 async def do_spam(channel):
     while(True):
@@ -37,31 +39,31 @@ async def on_ready():
 def get_server_members(server):
     return [member.mention for member in server.members]
 
+def add_message_listener(function):
+    message_listeners.append(function)
+
+def del_message_listener(function):
+    message_listeners.remove(function)
+
 @client.event
 async def on_message(message):
-    global auto_catch
-    if message.author.id == '365975655608745985' and message.channel.id == '418977256854126593':
-        if message.embeds != []:
-            if 'title' in message.embeds[0].keys() and message.embeds[0]['title'].startswith("A wild po"):
-                embed = message.embeds[0]
-                pokemon = re.search('[0-9]{3}(.+?)(-.+)?\.png', embed['image']['url']).group(1)
-                if 'image' in embed.keys() and auto_catch and pokemon in catch_list:
-                    await client.send_message(message.channel, 'p!catch ' + pokemon)
-                    print("Trying to catch " + pokemon)
     if message.author == client.user or message.author.id == '237019959287480320':
+    for func in message_listeners:
+        await func(message)
+    if message.author == client.user:
         if message.content.startswith('!spam'):
-                if message.channel in spam.keys():
-                    spam[message.channel] = not spam[message.channel]
-                else:
-                    spam[message.channel] = True
-                await do_spam(message.channel);
+            if message.channel in spam.keys():
+                spam[message.channel] = not spam[message.channel]
+            else:
+                spam[message.channel] = True
+            await do_spam(message.channel)
         elif message.content.startswith('!catch'):
-            auto_catch = not auto_catch
+            pokecatcher.toggle_autocatch(message.channel)
         elif message.content.startswith('!everyone'):
             m = ""
             for i in get_server_members(message.server):
                 m += i
-            await client.send_message(message.channel, m) 
+            await client.send_message(message.channel, m)
 
 #@client.event
 #async def on_message_delete(message):
@@ -71,9 +73,12 @@ def main(_spam_file=None):
     global spam_from_file
     global spam_file
     global spammer
+    global pokecatcher
+    global client
     spammer = Spammer(_spam_file)
+    pokecatcher = PokeCatcher(client)
+    add_message_listener(pokecatcher.on_message)
     user_email = input("email: ")
     user_pw = getpass.getpass()
     client.run(user_email, user_pw)
-
 
