@@ -17,6 +17,7 @@ spam_file = None
 auto_catch = False
 spammer = None
 message_listeners = []
+reactions = True
 
 async def do_spam(channel):
     while(True):
@@ -61,9 +62,15 @@ async def on_message(message):
                 m += i
             await client.send_message(message.channel, m)
 
+
 #@client.event
 #async def on_message_delete(message):
-#    await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+#    if message.author == client.user or message.author.id == '365975655608745985':
+#        print('Your secret is safe with me')
+#    else:
+#        await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+        #insert gotcha into the sent message via reactions
+
 
 def main(_spam_file=None):
     global spam_from_file
@@ -77,5 +84,4 @@ def main(_spam_file=None):
     user_email = input("email: ")
     user_pw = getpass.getpass()
     client.run(user_email, user_pw)
-
 
