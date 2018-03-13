@@ -21,13 +21,13 @@ class PokeCatcher():
         embed = message.embeds[0]
         if 'title' in embed.keys() and embed['title'].startswith("A wild po"):
             return True
-
+        
     def get_wild_pokemon(message):
         url = message.embeds[0]['image']['url']
         return re.search(POKEMON_REGEX, url).group(1)
 
     async def on_message(self, message):
-        if self.message_matters(message) and PokeCatcher.is_wild_pokemon(message):
+        if self.message_matters(message) and PokeCatcher.is_wild_pokemon(message) and (catch_all or PokeCatcher.get_wild_pokemon(message) in catch_list):
             if self.channels[message.channel]:
                 await self.client.send_message(message.channel, 'p!catch ' + PokeCatcher.get_wild_pokemon(message))
 
@@ -36,4 +36,5 @@ class PokeCatcher():
             self.channels[channel] = not self.channels[channel]
         else:
             self.channels[channel] = True
-
+            
+        

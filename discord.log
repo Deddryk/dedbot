@@ -1,0 +1,33 @@
+2018-03-13 18:13:30,430:INFO:discord.client: attempting to login via cache
+2018-03-13 18:13:30,432:INFO:discord.client: login cache file found
+2018-03-13 18:13:31,033:INFO:discord.gateway: Created websocket connected to wss://gateway.discord.gg?encoding=json&v=6
+2018-03-13 18:13:31,035:INFO:discord.gateway: sent the identify payload to create the websocket
+2018-03-13 18:13:33,404:INFO:discord.state: processed a chunk for 115 members.
+2018-03-13 18:13:33,426:INFO:discord.state: processed a chunk for 101 members.
+2018-03-13 18:13:33,459:INFO:discord.state: processed a chunk for 195 members.
+2018-03-13 18:13:33,461:INFO:discord.state: processed a chunk for 38 members.
+2018-03-13 18:13:33,462:INFO:discord.state: processed a chunk for 3 members.
+2018-03-13 18:13:33,462:INFO:discord.state: processed a chunk for 8 members.
+2018-03-13 18:13:33,462:INFO:discord.state: processed a chunk for 3 members.
+2018-03-13 18:13:33,463:INFO:discord.state: processed a chunk for 9 members.
+2018-03-13 18:13:33,623:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:33,738:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:33,743:INFO:discord.state: processed a chunk for 138 members.
+2018-03-13 18:13:33,819:INFO:discord.state: processed a chunk for 726 members.
+2018-03-13 18:13:33,983:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,107:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,226:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,320:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,436:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,511:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,585:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,661:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,739:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,811:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,883:INFO:discord.state: processed a chunk for 1000 members.
+2018-03-13 18:13:34,889:INFO:discord.state: processed a chunk for 79 members.
+2018-03-13 18:13:34,891:INFO:discord.state: processed a chunk for 14 members.
+2018-03-13 18:13:34,891:INFO:discord.state: processed a chunk for 3 members.
+2018-03-13 18:13:34,892:INFO:discord.state: processed a chunk for 15 members.
+2018-03-13 18:13:34,893:INFO:discord.state: processed a chunk for 13 members.
+2018-03-13 18:13:34,896:INFO:discord.state: Requesting GUILD_SYNC for 15 guilds

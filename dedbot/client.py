@@ -14,28 +14,40 @@ client = discord.Client()
 spam = {}
 spam_from_file = False
 spam_file = None
-textfile = 'files/what_to_catch.txt'
+auto_catch = False
 spammer = None
 message_listeners = []
 reactions = True
+catch_file = 'files/what_to_catch.txt'
+catch_all = False 
 
 async def do_spam(channel):
     while(True):
         if (spam[channel]):
             await client.send_message(channel, next(spammer))
-            await asyncio.sleep(6)
+            await asyncio.sleep(1.5)
         else:
             return
 
 @client.event
 async def on_ready():
-    print('Logged in as')
-    print(client.user.name)
-    print(client.user.id)
-    print('------')
-    with open(textfile) as pokemon_catch:
-        catch_list = pokemon_catch.readlines()
-
+    try:
+        print('Logged in as')
+        print(client.user.name)
+        print(client.user.id)
+        print('------')
+    except discord.errors.HTTPException:
+        pass
+        print('Client ' + user_email + ' or client ' + user_pw + ' is incorrect')
+    try:
+        with open(catch_file) as f_obj:
+            mons = f_obj.read().splitlines()
+    except FileNotFoundError:
+        print('You are in the wrong directory or ' + str(catch_file) + ' does not exist') 
+        catch_all = True
+    else:
+        catch_list = [re.sub(' +-.*', '', catch_list) for catch_list in mons]
+        print(catch_list)
 def get_server_members(server):
     return [member.mention for member in server.members]
 
@@ -47,7 +59,6 @@ def del_message_listener(function):
 
 @client.event
 async def on_message(message):
-    if message.author == client.user or message.author.id == '237019959287480320':
     for func in message_listeners:
         await func(message)
     if message.author == client.user:
@@ -65,9 +76,15 @@ async def on_message(message):
                 m += i
             await client.send_message(message.channel, m)
 
+
 #@client.event
 #async def on_message_delete(message):
-#    await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+#    if message.author == client.user or message.author.id == '365975655608745985':
+#        print('Your secret is safe with me')
+#    else:
+#        await client.send_message(message.channel, '{0} deleted message: {1}'.format(message.author, message.content))
+        #insert gotcha into the sent message via reactions
+
 
 def main(_spam_file=None):
     global spam_from_file
