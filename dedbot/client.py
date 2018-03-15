@@ -31,6 +31,7 @@ async def do_spam(channel):
 
 @client.event
 async def on_ready():
+    global pokecatcher
     try:
         print('Logged in as')
         print(client.user.name)
@@ -45,9 +46,11 @@ async def on_ready():
     except FileNotFoundError:
         print('You are in the wrong directory or ' + str(catch_file) + ' does not exist') 
         catch_all = True
-    else:
-        catch_list = [re.sub(' +-.*', '', catch_list) for catch_list in mons]
-        print(catch_list)
+    catch_list = [re.sub(' +-.*', '', catch_list) for catch_list in mons]
+    pokecatcher = PokeCatcher(client, catch_list)
+    add_message_listener(pokecatcher.on_message)
+    print(catch_list)
+
 def get_server_members(server):
     return [member.mention for member in server.members]
 
@@ -90,11 +93,8 @@ def main(_spam_file=None):
     global spam_from_file
     global spam_file
     global spammer
-    global pokecatcher
     global client
     spammer = Spammer(_spam_file)
-    pokecatcher = PokeCatcher(client)
-    add_message_listener(pokecatcher.on_message)
     user_email = input("email: ")
     user_pw = getpass.getpass()
     client.run(user_email, user_pw)
