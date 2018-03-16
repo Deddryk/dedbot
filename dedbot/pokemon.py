@@ -50,6 +50,6 @@ class PokeCatcher():
         if message_matters(message) and client.user.name in message and 'aug' in message:
             hard_shit = message.split()
             caught_pokemon = hard_shit.split('1')
-               with open(self.caught_file, 'a' ) as caught:
-                   caught.write(caught_pokemon + '\n')
+            with open('files/what_has_been_caught.txt', 'a' ) as caught:
+                 caught.write(caught_pokemon + '\n')
             
