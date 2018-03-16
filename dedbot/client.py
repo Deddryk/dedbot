@@ -20,6 +20,7 @@ message_listeners = []
 reactions = True
 catch_file = 'files/what_to_catch.txt'
 catch_all = False 
+caught_file = 'files/what_has_been_caught.txt'
 
 async def do_spam(channel):
     while(True):
