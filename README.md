@@ -21,6 +21,9 @@ Features
     `-f <filename>` it reads lines from that text file and loops over it.
 
     Toggle with `!spam`
+* !everyone
+    
+    Mentions everyone in a channel, even in channels where @everone is disabled
 
 [pokecord]: https://discordbots.org/bot/365975655608745985
 
