@@ -32,6 +32,7 @@ async def do_spam(channel):
 @client.event
 async def on_ready():
     global pokecatcher
+    mons = []
     try:
         print('Logged in as')
         print(client.user.name)
