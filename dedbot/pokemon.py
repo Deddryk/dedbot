@@ -32,9 +32,11 @@ def is_pokecord(message):
 
 class PokeCatcher():
 
-    def __init__(self, client):
+    def __init__(self, client, catch_list=[]):
         self.channels = {}
         self.client = client
+        self.catch_list = catch_list
+        self.catch_all = not self.catch_list
         logger.info("Initializing PokeCatcher")
 
     def message_matters(self, message):
@@ -46,7 +48,7 @@ class PokeCatcher():
         await self.client.send_message(channel, 'p!catch ' + pokemon)
 
     async def on_message(self, message):
-        if self.message_matters(message) and is_wild_pokemon(message):
+        if self.message_matters(message) and is_wild_pokemon(message) and (self.catch_all or PokeCatcher.get_wild_pokemon(message) in self.catch_list):
             if self.channels[message.channel]:
                 await self.catch(message.channel, get_wild_pokemon(message))
         if is_pokecord(message) and self.client.user.mentioned_in(message):
