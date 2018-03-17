@@ -19,7 +19,13 @@ def is_wild_pokemon(message):
 
 def get_wild_pokemon(message):
     url = message.embeds[0]['image']['url']
-    return re.search(POKEMON_REGEX, url).group(1)
+    pokemon = ''
+    try:
+        pokemon = re.search(POKEMON_REGEX, url).group(1)
+        pokemon = re.sub('_', ' ', pokemon)
+    except:
+        logger.error('Failed to get pokemon from {}'.format(url))
+    return pokemon
 
 def is_pokecord(message):
     return message.author.id == POKECORD_ID
@@ -36,6 +42,7 @@ class PokeCatcher():
 
     async def catch(self, channel, pokemon):
         logger.info("Trying to catch pokemon {}.".format(pokemon))
+        self.most_recent_try = pokemon.lower()
         await self.client.send_message(channel, 'p!catch ' + pokemon)
 
     async def on_message(self, message):
@@ -49,6 +56,8 @@ class PokeCatcher():
                 logger.debug(repr(pokemon))
                 pokemon = pokemon.group(1)
                 logger.info("Caught a {}".format(pokemon))
+                if pokemon.lower() != self.most_recent_try:
+                    logger.error("Did not catch {}".format(self.most_recent_try))
 
     def toggle_autocatch(self, channel):
         if channel in self.channels.keys():
