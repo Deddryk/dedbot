@@ -29,7 +29,7 @@ class PokeCatcher():
         return re.search(POKEMON_REGEX, url).group(1)
 
     async def on_message(self, message):
-        if self.message_matters(message) and PokeCatcher.is_wild_pokemon(message) and (self.catch_all or PokeCatcher.get_wild_pokemon(message) in self.catch_list or PokeCatcher.get_wild_pokemon(message) not in self.caught_file):
+        if self.message_matters(message) and PokeCatcher.is_wild_pokemon(message) and (self.catch_all or PokeCatcher.get_wild_pokemon(message) in self.catch_list or PokeCatcher.get_wild_pokemon(message) not in 'files/what_has_been_caught.txt'):
             if self.channels[message.channel]:
                 await self.client.send_message(message.channel, 'p!catch ' + PokeCatcher.get_wild_pokemon(message))
                 if PokeCatcher.get_wild_pokemon(message) in self.catch_list:
@@ -43,13 +43,13 @@ class PokeCatcher():
             self.channels[channel] = not self.channels[channel]
         else:
             self.channels[channel] = True
-            
-         
+
+
         
     def is_caught(message):
-        if message_matters(message) and client.user.name in message and 'aug' in message:
-            hard_shit = message.split()
-            caught_pokemon = hard_shit.split('1')
-            with open('files/what_has_been_caught.txt', 'a' ) as caught:
-                 caught.write(caught_pokemon + '\n')
-            
+        if message.startswith('Congr') and client.user.mentioned_in(message):
+             caught_pokemon = message.split()[-1].split('!')
+             with open('files/what_has_been_caught.txt', 'a' ) as caught:
+                 caught.write(str(caught_pokemon[0]) + '\n')
+                 print('Pokemon Added To Caught List:     ' + str(caught_pokemon[0]))
+
