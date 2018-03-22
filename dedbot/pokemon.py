@@ -5,10 +5,9 @@ import logging
 import discord
 
 POKECORD_ID = '365975655608745985'
-POKEMON_REGEX = '[0-9]{3}([A-Za-z_]+)(-.+)?\.png(/\.*)?'
+POKEMON_REGEX = '[0-9]{3}([A-Za-z_é]+)(-.+)?\.png(/\.*)?'
 AUTOCATCH_LOG_MSG = "Auto catch is now {} in channel {}."
 logger = logging.getLogger(__name__)
-print(__name__)
 
 def is_wild_pokemon(message):
     if not message.embeds:
@@ -25,9 +24,7 @@ def pokemon_from_url(url):
     pokemon = ''
     try:
         pokemon = re.search(POKEMON_REGEX, url).group(1)
-        print(pokemon)
         pokemon = re.sub('_', ' ', pokemon)
-        print(pokemon)
     except:
         logger.error('Failed to get pokemon from {}'.format(url))
     return pokemon
